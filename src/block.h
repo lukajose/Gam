@@ -12,7 +12,6 @@ class Block {
         uint32_t _nIndex;
         int64_t _nNonce;
         string _sData;
-        
         time_t _tTime;
         string _CalculateHash() const;
 };

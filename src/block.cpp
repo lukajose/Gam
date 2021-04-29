@@ -8,6 +8,7 @@ using namespace std;
 Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn) {
     _nNonce = -1;
     _tTime = time(nullptr);
+    _sHash = "root";
 }
 
 // getter  method for returning the hash

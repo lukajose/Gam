@@ -6,6 +6,7 @@ class Blockchain {
     public:
         Blockchain();
         void operator+(Block bNew);
+        void printBlocks();
     private:
         uint32_t _nDifficulty;
         std::vector<Block> _vChain;
