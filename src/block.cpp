@@ -2,6 +2,7 @@
 #include <vector>
 #include "block.h"
 #include "sha256.h"
+#include <sstream>
 using namespace std;
 
 Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn) {
@@ -36,6 +37,7 @@ void Block::MineBlock(uint32_t nDifficulty) {
         _nNonce++;
         _sHash = _CalculateHash();
     } while (_sHash.substr(0,nDifficulty) != str);
+    cout << "Block mined: " << _sHash << endl;
 };
 
 inline string Block::_CalculateHash() const {
