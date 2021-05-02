@@ -6,9 +6,9 @@
 using namespace std;
 
 Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn) {
-    _nNonce = -1;
+    _nNonce = -1; 
     _tTime = time(nullptr);
-    _sHash = "root";
+    _sHash = "0000000000000000";
 }
 
 // getter  method for returning the hash
@@ -19,7 +19,7 @@ string Block::GetHash() {
 // this is where the mining block magic happens
 /*
     a miner must create a crypto hash of the block that matches the requirements for a valid hash
-    at that time, it needs to count the number of zeroes at the beginning og the hash, if number of zeros is equal
+    at that time, it needs to count the number of zeroes at the beginning of the hash, if number of zeros is equal
     to  or greater than the difficulty level set by the network block is valid;
     The process is called proof of work;
 */

@@ -24,3 +24,8 @@ void Blockchain::printBlocks() {
 Block Blockchain::_GetLastBlock() const {
     return _vChain.back();
 }
+
+bool Blockchain::_IsChainValid() {
+    
+    return true;
+};
