@@ -1,21 +1,20 @@
 #include <iostream>
-#include <queue> 
-using namespace std;
+#include <queue>
 class Transaction {
     private:
-        string from; // account owner
-        string to;  // account receiver
+        std::string from; // account owner
+        std::string to;  // account receiver
         long double Gam; // gam is the currency of the network
-        string signature; // verify valid owner
+        std::string signature; // verify valid owner
     public:
         float fee; // miner fee
-        string signTransaction();
+        std::string signTransaction();
 
 };
 class MemPool {
     private:
-        priority_queue<Transaction> transactions; // highest fee transactions have priorty in the network when mining
-        string publicKey; // validates incoming transactions in the network
+        std::priority_queue<Transaction> transactions; // highest fee transactions have priorty in the network when mining
+        std::string publicKey; // validates incoming transactions in the network
     public:
         MemPool();
         void operator+(Transaction t); // add transaction to pool

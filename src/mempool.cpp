@@ -11,7 +11,6 @@
 #include <netinet/in.h> 
 #include <netdb.h>
 #include <sys/time.h>
-using namespace std;
 #define TRUE   1 
 #define FALSE  0 
 #define PORT 8888 
@@ -27,7 +26,7 @@ int MemPool::listenTransactions() {
     // create a socket
     int masterSocket = socket(AF_INET,SOCK_STREAM,0);
     if(masterSocket == -1) {
-        cerr << "Cant create a socket!" << endl;
+        std::cerr << "Cant create a socket!" << std::endl;
         return -1;
     };
     //set master socket to allow multiple connections , 
@@ -46,14 +45,14 @@ int MemPool::listenTransactions() {
     hint.sin_port = htons(PORT);
     // pointer to a string to a number 127.0.0.1
     inet_pton(AF_INET,"0.0.0.0",&hint.sin_addr);
-
-    if(bind(masterSocket, (struct sockaddr *)&hint, sizeof(hint)) == -1) {
-        cerr << "Cant bind to port!" << endl;
+    int bindStats = bind(masterSocket, (struct sockaddr *)&hint, sizeof(hint));
+    if(bindStats == -1) {
+        std::cerr << "Cant bind to port!" << std::endl;
         return FALSE;
     }
     //specify the maximum number of max connections (128)
     if(listen(masterSocket,SOMAXCONN)) {
-        cerr << "Exceeded number of max connections" << endl;
+        std::cerr << "Exceeded number of max connections" << std::endl;
         return FALSE;
     };
     // accept a call
@@ -64,7 +63,7 @@ int MemPool::listenTransactions() {
     
     int clientSocket = accept(masterSocket,(sockaddr *)&client,&clientSize);
     if(clientSocket == -1) {
-        cerr << "Problem with client connecting!" << endl;
+        std::cerr << "Problem with client connecting!" << std::endl;
         return FALSE; 
     };
     close(masterSocket);
@@ -72,10 +71,10 @@ int MemPool::listenTransactions() {
     memset(svc,0,NI_MAXSERV);
     int result = getnameinfo((sockaddr *)&client,sizeof(client),host,NI_MAXHOST,svc,NI_MAXSERV,0);
     if(result) {
-        cout << host << "connected on: " << svc << endl;
+        std::cout << host << "connected on: " << svc << std::endl;
     } else {
         inet_ntop(AF_INET,&client.sin_addr,host,NI_MAXHOST);
-        cout << host << "connected on :" << ntohs(client.sin_port) << endl;
+        std::cout << host << "connected on :" << ntohs(client.sin_port) << std::endl;
     }
     char buff[4096];
     while(TRUE) {
@@ -85,15 +84,15 @@ int MemPool::listenTransactions() {
         int bytesRecv = recv(clientSocket,buff,4096,0);
         // Display message
         if(bytesRecv == -1) {
-            cout << "There was a connection issue " << endl;
+            std::cout << "There was a connection issue " << std::endl;
             break;
         };
         // Resend message
         if(bytesRecv == 0) {
-            cout << "The client disconnected " << endl;
+            std::cout << "The client disconnected " << std::endl;
             break;
         };
-        cout << "Received : " << string(buff,0,bytesRecv) << endl;
+        std::cout << "Received : " << std::string(buff,0,bytesRecv) << std::endl;
         // resend message
         send(clientSocket,buff,bytesRecv + 1, 0);
 
