@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>  
 #include "blockchain.h"
-
+#include "mempool.h"
 using namespace std;
 int main() {
     Blockchain bChain = Blockchain();
@@ -23,6 +23,9 @@ int main() {
     }
 
     bChain.printBlocks();
+    MemPool pool;
+    int status = pool.listenTransactions();
+    cout << "Status:" << status << endl;
 
     return 0;
 }

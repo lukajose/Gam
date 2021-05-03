@@ -1,4 +1,3 @@
-#include <vector>
 #include <iostream>
 #include <queue> 
 using namespace std;
@@ -13,9 +12,6 @@ class Transaction {
         string signTransaction();
 
 };
-
-
-
 class MemPool {
     private:
         priority_queue<Transaction> transactions; // highest fee transactions have priorty in the network when mining
@@ -24,10 +20,7 @@ class MemPool {
         MemPool();
         void operator+(Transaction t); // add transaction to pool
         void broadcastTransaction(Transaction t);
-        void listenTransactions();
+        int listenTransactions();
         Transaction _GetTransaction();
-
-
-
          
 };
