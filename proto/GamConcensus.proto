@@ -16,16 +16,25 @@ message AddBlockRequest {
 message AddBlockResponse {
     string hash = 1;
 }
-
-message GetBlockchainRequest {
-}
-
 message Block {
     string hash = 1;
     string prevBlockHash = 2;
     string data = 3;
 }
+message GetBlockchainRequest {
+}
 
 message GetBlockchainResponse {
     repeated Block blocks = 1;
 }
+message Transaction {
+    string from = 1;
+    string to = 2;
+    string data = 3;
+}
+
+message TransactionResponse {
+    bool received = 1
+}
+
+
