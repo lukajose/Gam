@@ -1,6 +1,7 @@
-# Custom Blockchain
+# Custom Crypto Currency
 
-An exercise to deeply understand blockchain technology and practice C++.
+A custom crypto currency in C++. The currency uses a similar p2p protocol as bitcoin. Instead of raw tcp the currency uses grpc.
+The concencus mechanism used is proof of work. More on this later.
 
 To compile and run in the root directory do:
 
