@@ -12,6 +12,7 @@ class Blockchain {
 
     private:
         uint32_t _nDifficulty;
+        uint32_t _chainHeight;
         vector<Block> _vChain;
         Block _GetLastBlock() const;
         bool _IsChainValid();  

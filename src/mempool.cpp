@@ -13,9 +13,7 @@
 #include <sys/time.h>
 #define TRUE   1 
 #define FALSE  0 
-#define PORT 8888 
-// #define NI_MAXHOST 128
-// #define NI_MAXSVC  128
+#define PORT 8888
 
 
 MemPool::MemPool() {

@@ -65,6 +65,8 @@
         "utility": "cpp",
         "vector": "cpp",
         "filesystem": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "__tree": "cpp",
+        "set": "cpp"
     }
 }
