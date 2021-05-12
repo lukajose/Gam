@@ -1,4 +1,3 @@
-
 cc_library(
     name = "chain",
     srcs = ["block.cpp","blockchain.cpp","mempool.cpp","sha256.cpp"],
@@ -9,6 +8,6 @@ cc_binary(
     srcs = ["main.cpp"],
     deps = [
         ":chain",
-        "//proto:concencus"
+        ":cppGamConcensusGrpc"
     ],
 )

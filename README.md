@@ -16,9 +16,15 @@ You will need bazel to run the project to install follow the instructions:
 
 - https://docs.bazel.build/versions/master/install.html
 
-To compile and run in the root directory do:
+To compile grpc libraries and proto buffs:
 
 ```
-bazel build //src:main
+bazel build :cppGamConcensusGrpc
 
+```
+
+Run using:
+
+```
+bazel run //:main/main
 ```

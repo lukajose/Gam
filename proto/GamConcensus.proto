@@ -2,39 +2,20 @@ syntax = "proto3";
 
 package proto;
 
-// Blockchain : service definition
-service Blockchain {
-    rpc AddBlock(AddBlockRequest) returns (AddBlockResponse){}
-    rpc GetBlockchain(GetBlockchainRequest) returns (GetBlockchainResponse){}
-    rpc SyncTransaction(TransactionRequest) returns(TransactionResponse){}
-}
-
-message AddBlockRequest {
-    string data = 1; // 1 is an order
-}
-
-message AddBlockResponse {
-    string hash = 1;
-}
-message Block {
-    string hash = 1;
-    string prevBlockHash = 2;
-    string data = 3;
-}
-message GetBlockchainRequest {
-}
-
-message GetBlockchainResponse {
-    repeated Block blocks = 1;
-}
-message Transaction {
-    string from = 1;
-    string to = 2;
-    string data = 3;
-}
-
-message TransactionResponse {
-    bool received = 1
-}
-
-
+// The greeting service definition.
+service Greeter {
+    // Sends a greeting
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+    // Sends another greeting
+    rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  }
+  
+  // The request message containing the user's name.
+  message HelloRequest {
+    string name = 1;
+  }
+  
+  // The response message containing the greetings
+  message HelloReply {
+    string message = 1;
+  }

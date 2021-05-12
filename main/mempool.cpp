@@ -16,8 +16,11 @@
 #define PORT 8888
 
 
-MemPool::MemPool() {
-    
+MemPool::MemPool(int connSize) {
+    this->maxClients = connSize;
+    this->clientSockets = new int[connSize];
+    memset(this->clientSockets,0,connSize);
+    this->clientIndex = 0;
 };
 
 int MemPool::listenTransactions() {
@@ -27,15 +30,18 @@ int MemPool::listenTransactions() {
         std::cerr << "Cant create a socket!" << std::endl;
         return -1;
     };
+    //set of socket descriptors 
+    fd_set readfds;
+    
+
     //set master socket to allow multiple connections , 
     //this is just a good habit, it will work without this
     int opt = TRUE; 
     if( setsockopt(masterSocket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, 
-          sizeof(opt)) < 0 )  
-    {  
+          sizeof(opt)) < 0 )  {  
         perror("setsockopt");  
         return FALSE;
-    }; 
+    };
     // bind the socket to an IP port
     sockaddr_in hint;
     hint.sin_family = AF_INET;
@@ -53,45 +59,37 @@ int MemPool::listenTransactions() {
         std::cerr << "Exceeded number of max connections" << std::endl;
         return FALSE;
     };
-    // accept a call
-    sockaddr_in client;
-    socklen_t clientSize;
-    char host[NI_MAXHOST];
-    char svc[NI_MAXSERV];
-    
-    int clientSocket = accept(masterSocket,(sockaddr *)&client,&clientSize);
-    if(clientSocket == -1) {
-        std::cerr << "Problem with client connecting!" << std::endl;
-        return FALSE; 
-    };
-    close(masterSocket);
-    memset(host,0,NI_MAXHOST);
-    memset(svc,0,NI_MAXSERV);
-    int result = getnameinfo((sockaddr *)&client,sizeof(client),host,NI_MAXHOST,svc,NI_MAXSERV,0);
-    if(result) {
-        std::cout << host << "connected on: " << svc << std::endl;
-    } else {
-        inet_ntop(AF_INET,&client.sin_addr,host,NI_MAXHOST);
-        std::cout << host << "connected on :" << ntohs(client.sin_port) << std::endl;
-    }
-    char buff[4096];
+  
+   
     while(TRUE) {
-        // clear the buffer
-        memset(buff,0,4096);
-        // wait for a message
-        int bytesRecv = recv(clientSocket,buff,4096,0);
-        // Display message
-        if(bytesRecv == -1) {
-            std::cout << "There was a connection issue " << std::endl;
-            break;
-        };
-        // Resend message
-        if(bytesRecv == 0) {
-            std::cout << "The client disconnected " << std::endl;
-            break;
-        };
-        std::cout << "Received : " << std::string(buff,0,bytesRecv) << std::endl;
-        // resend message
+        ///clear the socket set 
+        FD_ZERO(&readfds);  
+     
+        //add master socket to set 
+        FD_SET(master_socket, &readfds);  
+        max_sd = master_socket;  
+             
+        //add child sockets to set 
+        for ( i = 0 ; i < this->maxClients ; i++)  {  
+            //socket descriptor 
+            sd = this->clientSockets[i];  
+                 
+            //if valid socket descriptor then add to read list 
+            if(sd > 0) FD_SET( sd , &readfds);  
+                 
+            //highest file descriptor number, need it for the select function 
+            if(sd > max_sd)  
+                max_sd = sd;  
+        }
+        //wait for an activity on one of the sockets , timeout is NULL , 
+        //so wait indefinitely 
+        activity = select( max_sd + 1 , &readfds , NULL , NULL , NULL);  
+       
+        if ((activity < 0) && (errno!=EINTR)) {  
+            printf("select error");  
+        }
+
+
         send(clientSocket,buff,bytesRecv + 1, 0);
 
     }

@@ -2,18 +2,10 @@
 #include <sstream>  
 #include "blockchain.h"
 #include "mempool.h"
+
 using namespace std;
 int main() {
     Blockchain bChain = Blockchain();
-    // cout << "Mining block 1 .. " << endl;
-    // bChain + Block(1,"Block 1 data");
-
-    // cout << "Mining Block 2 .." << endl;
-    // bChain + Block(2,"Block 2 data");
-
-    // cout << "Mining block 3 ..." << endl;
-    // bChain + Block(3, "Block 3 data");
-
     
     for(int i = 0; i < 20; ++i ) {
         stringstream ss;
@@ -23,9 +15,10 @@ int main() {
     }
 
     bChain.printBlocks();
-    MemPool pool;
+    MemPool pool(100);
     int status = pool.listenTransactions();
     cout << "Status:" << status << endl;
+    
 
-    return 0;
+    return 1;
 }
