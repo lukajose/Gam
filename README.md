@@ -28,3 +28,14 @@ Run using:
 ```
 bazel run //:main/main
 ```
+
+Run grpc server using:
+```
+bazel run //test:greeter_server
+```
+
+Run grpc client with:
+
+```
+bazel run //test:greeter_client
+```
