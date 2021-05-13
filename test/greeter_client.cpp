@@ -6,7 +6,7 @@
 #include <grpcpp/grpcpp.h>
 
 #ifdef BAZEL_BUILD
-#include "GamConcensus.grpc.pb.h"
+#include "proto/GamConcensus.grpc.pb.h"
 #else
 #include "GamConcensus.grpc.pb.h"
 #endif
@@ -14,9 +14,9 @@
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
-using helloworld::Greeter;
-using helloworld::HelloReply;
-using helloworld::HelloRequest;
+using proto::Greeter;
+using proto::HelloReply;
+using proto::HelloRequest;
 
 class GreeterClient {
  public:
@@ -60,30 +60,10 @@ int main(int argc, char** argv) {
   // the argument "--target=" which is the only expected argument.
   // We indicate that the channel isn't authenticated (use of
   // InsecureChannelCredentials()).
-  std::string target_str;
-  std::string arg_str("--target");
-  if (argc > 1) {
-    std::string arg_val = argv[1];
-    size_t start_pos = arg_val.find(arg_str);
-    if (start_pos != std::string::npos) {
-      start_pos += arg_str.size();
-      if (arg_val[start_pos] == '=') {
-        target_str = arg_val.substr(start_pos + 1);
-      } else {
-        std::cout << "The only correct argument syntax is --target="
-                  << std::endl;
-        return 0;
-      }
-    } else {
-      std::cout << "The only acceptable argument is --target=" << std::endl;
-      return 0;
-    }
-  } else {
-    target_str = "localhost:50051";
-  }
+  std::string target_str = "localhost:50051";
   GreeterClient greeter(
       grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials()));
-  std::string user("world");
+  std::string user("World by Luka!");
   std::string reply = greeter.SayHello(user);
   std::cout << "Greeter received: " << reply << std::endl;
 

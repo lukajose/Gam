@@ -8,18 +8,25 @@ proto_library(
     visibility = ["//visibility:public"],
 )
 
-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_compile")
+load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_compile","cpp_proto_library")
 cpp_proto_compile(
     name = "cppGamConcensus",
     protos = [":GamConcensus"],
 
 )
+cpp_proto_library(
+    name = "cppGamConcensuslib",
+    protos = [":GamConcensus"],
+
+)
+
 
 load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_compile","cpp_grpc_library")
 cpp_grpc_library(
     name = "cppGamConcensusGrpclib",
     protos = [":GamConcensus"],
     visibility = ["//visibility:public"],
+    deps = [":cppGamConcensuslib"],
 )
 
 cpp_grpc_compile(
