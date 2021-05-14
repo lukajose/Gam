@@ -2,8 +2,21 @@
 #include <sstream>  
 #include "blockchain.h"
 #include "mempool.h"
-
+#include <thread>
+#include <unistd.h>
 using namespace std;
+
+void hello() {
+    int i = 0;
+    while(i < 100) {
+        cout << i << endl;
+        i++;
+        sleep(2);
+    };
+};
+
+
+
 int main() {
     Blockchain bChain = Blockchain();
     
@@ -16,9 +29,12 @@ int main() {
 
     bChain.printBlocks();
     MemPool pool(100);
-    int status = pool.listenTransactions();
-    cout << "Status:" << status << endl;
-    
+    std::thread t(hello);
+    while(true) {
+        cout << "another thread running" << endl;
+        sleep(10);
+    }
+    t.join();
 
     return 1;
 }
