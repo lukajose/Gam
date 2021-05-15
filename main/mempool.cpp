@@ -1,16 +1,6 @@
 #include <iostream>
 #include "mempool.h"
-#include <stdio.h> 
-#include <string.h>   //strlen 
-#include <stdlib.h> 
-#include <errno.h> 
-#include <unistd.h>   //close 
-#include <arpa/inet.h>    //close 
-#include <sys/types.h> 
-#include <sys/socket.h> 
-#include <netinet/in.h> 
-#include <netdb.h>
-#include <sys/time.h>
+#include <mutex>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
@@ -34,12 +24,14 @@ using proto::HelloRequest;
 
 /// Logic and data behind the server's behavior.
 class GreeterServiceImpl final : public Greeter::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request,
-                  HelloReply* reply) override {
-    std::string prefix("Hello ");
-    reply->set_message(prefix + request->name());
-    return Status::OK;
-  }
+  public:
+    Mempool pool(100);
+    Status SayHello(ServerContext* context, const HelloRequest* request,
+                    HelloReply* reply) override {
+      std::string prefix("Hello ");
+      reply->set_message(prefix + request->name());
+      return Status::OK;
+    }
 };
 
 void RunServer() {
@@ -74,4 +66,9 @@ MemPool::MemPool(int connSize) {
 
 int MemPool::listenTransactions() {
     RunServer();
+};
+
+void MemPool::operator+(Transaction * t) {
+  // add transaction class to priority queue
+  cout << "TODO" << endl;
 };

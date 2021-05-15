@@ -8,6 +8,7 @@ class Transaction {
         std::string signature; // verify valid owner
     public:
         float fee; // miner fee
+        Transaction(std::string from,std::string to,long double Gam,std::string sig);
         std::string signTransaction();
 
 };
@@ -20,9 +21,9 @@ class MemPool {
         std::string publicKey; // validates incoming transactions in the network
     public:
         MemPool(int connSize);
-        void operator+(Transaction t); // add transaction to pool
-        void broadcastTransaction(Transaction t);
+        void operator+(Transaction * t); // add transaction to pool
+        void broadcastTransaction(Transaction * t);
         int listenTransactions();
-        Transaction _GetTransaction();
+        Transaction getTransaction();
          
 };

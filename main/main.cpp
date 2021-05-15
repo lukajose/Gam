@@ -26,14 +26,16 @@ int main() {
         cout << "Mining block " + ss.str() + " ..." << endl;
         bChain + Block(i,"Block "+ ss.str() +" data");
     }
-
     bChain.printBlocks();
     MemPool pool(100);
-    std::thread t(hello);
-    while(true) {
-        cout << "another thread running" << endl;
-        sleep(10);
-    }
+    std::thread t([&pool](){
+        pool.listenTransactions();
+    });
+    // while(true) {
+    //     cout << "another thread running" << endl;
+    //     sleep(10);
+    // }
+    cout << "Wont exit!" << endl;
     t.join();
 
     return 1;
