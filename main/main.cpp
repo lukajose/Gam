@@ -27,7 +27,7 @@ int main() {
         bChain + Block(i,"Block "+ ss.str() +" data");
     }
     bChain.printBlocks();
-    MemPool pool(100);
+    MemPool pool;
     std::thread t([&pool](){
         pool.listenTransactions();
     });

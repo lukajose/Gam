@@ -14,13 +14,10 @@ class Transaction {
 };
 class MemPool {
     private:
-        int maxClients;
-        int * clientSockets;
-        int clientIndex;
         std::priority_queue<Transaction> transactions; // highest fee transactions have priorty in the network when mining
         std::string publicKey; // validates incoming transactions in the network
     public:
-        MemPool(int connSize);
+        MemPool();
         void operator+(Transaction * t); // add transaction to pool
         void broadcastTransaction(Transaction * t);
         int listenTransactions();

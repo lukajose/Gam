@@ -3,11 +3,9 @@ syntax = "proto3";
 package proto;
 
 // The greeting service definition.
-service Greeter {
+service Concencus {
     // Sends a greeting
-    rpc SayHello (HelloRequest) returns (HelloReply) {}
-    // Sends another greeting
-    rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+    rpc SayHello(stream HelloRequest) returns ( stream HelloReply) {}
 }
   
 // The request message containing the user's name.

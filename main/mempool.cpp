@@ -4,6 +4,7 @@
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
+#include <unistd.h>
 #ifdef BAZEL_BUILD
 #include "proto/GamConcensus.grpc.pb.h"
 #else
@@ -16,6 +17,7 @@
 using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
+using grpc::ServerReaderWriter;
 using grpc::Status;
 using proto::Greeter;
 using proto::HelloReply;
@@ -25,11 +27,18 @@ using proto::HelloRequest;
 /// Logic and data behind the server's behavior.
 class GreeterServiceImpl final : public Greeter::Service {
   public:
-    Mempool pool(100);
-    Status SayHello(ServerContext* context, const HelloRequest* request,
-                    HelloReply* reply) override {
-      std::string prefix("Hello ");
-      reply->set_message(prefix + request->name());
+    Status SayHello(ServerContext* context, ServerReaderWriter<HelloReply,HelloRequest> *stream) override {
+      HelloRequest * hello = new HelloRequest();
+      HelloReply * reply = new HelloReply();
+      reply->set_message("Here we go again on my own !");
+      int i = 0;
+      while(stream->Read(hello) && i < 10) {
+        std::cout << hello->name() << std::endl;
+        sleep(3);
+        stream->Write(*reply);
+        i++;
+      }
+      
       return Status::OK;
     }
 };
@@ -57,11 +66,8 @@ void RunServer() {
 
 
 
-MemPool::MemPool(int connSize) {
-    this->maxClients = connSize;
-    this->clientSockets = new int[connSize];
-    memset(this->clientSockets,0,connSize);
-    this->clientIndex = 0;
+MemPool::MemPool() {
+    std::cout << "init pool " << std::endl;
 };
 
 int MemPool::listenTransactions() {
@@ -70,5 +76,5 @@ int MemPool::listenTransactions() {
 
 void MemPool::operator+(Transaction * t) {
   // add transaction class to priority queue
-  cout << "TODO" << endl;
+  std::cout << "TODO" << std::endl;
 };
