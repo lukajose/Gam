@@ -34,6 +34,7 @@ class ConcencusServiceImpl: public Concencus::Service  {
   }
   Status TransactionSub(ServerContext* context,const Empty * m, ServerWriter<Transaction> *stream)   {
     for(int i = 0; i < 100 ; i++) {
+      std::cout << "sending data transaction" << std::endl;
       proto::Transaction t;
       t.set_from("Luka");
       t.set_to("Gam");
@@ -41,6 +42,7 @@ class ConcencusServiceImpl: public Concencus::Service  {
       stream->Write(t);
       sleep(3);
     };
+
     return Status::OK;
   };
 };
