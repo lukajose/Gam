@@ -4,16 +4,25 @@ package proto;
 
 // The greeting service definition.
 service Concencus {
-    // Sends a greeting
-    rpc SayHello(stream HelloRequest) returns ( stream HelloReply) {}
-}
-  
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+    rpc newBlock(Block) returns ( ConStatus);
+    rpc TransactionSubs(Empty) returns ( stream Transaction);
 }
 
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
+message ConStatus {
+  bool added = 1;
+
 }
+message Empty {}
+// The request message containing the user's name.
+message Transaction {
+  string from = 1;
+  string to = 2;
+  uint64 amount = 3;
+}
+
+message Block {
+  string hash = 1;
+  uint64 nonce = 2;
+  string merkleTreeHash=3;
+}
+

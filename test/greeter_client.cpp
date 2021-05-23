@@ -16,14 +16,14 @@
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
-using grpc::ClientReaderWriter;
-using proto::Greeter;
-using proto::HelloReply;
-using proto::HelloRequest;
+using grpc::ClientReader;
+using proto::Concencus;
+using proto::Empty;
+using proto::Block;
 
-class GreeterClient {
+class ConcensusClient {
  public:
-  GreeterClient(std::shared_ptr<Channel> channel)
+  ConcensusClient(std::shared_ptr<Channel> channel)
       : stub_(Greeter::NewStub(channel)) {}
 
   // Assembles the client's payload, sends it and presents the response back
