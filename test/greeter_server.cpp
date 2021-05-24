@@ -32,7 +32,8 @@ class ConcencusServiceImpl: public Concencus::Service  {
     reply->set_added(true);
     return Status::OK;
   }
-  Status TransactionSub(ServerContext* context,const Empty * m, ServerWriter<Transaction> *stream)   {
+  Status TransactionSubs(ServerContext* context,const Empty * m, ServerWriter<Transaction> *stream) {
+    std::cout << "Starting transaction stream!" << std::endl;
     for(int i = 0; i < 100 ; i++) {
       std::cout << "sending data transaction" << std::endl;
       proto::Transaction t;

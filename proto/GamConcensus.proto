@@ -4,8 +4,8 @@ package proto;
 
 // The greeting service definition.
 service Concencus {
-    rpc newBlock(Block) returns ( ConStatus);
-    rpc TransactionSubs(Empty) returns ( stream Transaction);
+    rpc newBlock(Block) returns ( ConStatus) {};
+    rpc TransactionSubs(Empty) returns ( stream Transaction){};
 }
 
 message ConStatus {

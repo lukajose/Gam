@@ -20,6 +20,7 @@ using grpc::ClientReader;
 using proto::Concencus;
 using proto::Empty;
 using proto::Block;
+using proto::ConStatus;
 using proto::Transaction;
 
 class ConcensusClient {
@@ -37,7 +38,8 @@ class ConcensusClient {
     ClientContext context;
     proto::Empty e;
     std::shared_ptr<ClientReader<Transaction> >stream(
-        stub_->TransactionSubs(&context,e));
+        stub_->TransactionSubs(&context,e)
+    );
     // The actual RPC.
     Transaction t;
     while(stream->Read(&t)) {
@@ -45,17 +47,39 @@ class ConcensusClient {
     };
     Status status = stream->Finish();
     if (!status.ok()) {
-      std::cout << "RouteChat rpc failed." << std::endl;
+      std::cout << "Transaction stream failed" << std::endl;
     } else {
       std::cout << "Closing connection all good!" << std::endl;
     };
   };
-  void SendBlock(Block * t) {
-    
+  Block MakeBlock(std::string hash,uint nonce,std::string merkle) {
+    Block b;
+    b.set_hash(hash);
+    b.set_nonce(nonce);
+    b.set_merkletreehash(merkle);
+    return b;
+  };
+  void SendBlock() {
+    Block b = MakeBlock("random12312sadasda@@#!",10,"12312asdakslda!!@#ASD");
+    ConStatus conn;
+    newBlock(b,&conn);
+    std::cout << "ConStatus in send block " << conn.added() << std::endl;
   };
 
  private:
   std::unique_ptr<Concencus::Stub> stub_;
+  bool newBlock(const Block &b, ConStatus * conn) {
+    std::cout << "new block sending .. " << std::endl;
+    ClientContext context;
+    Status status = stub_->newBlock(&context,b,conn);
+    if(!status.ok()) {
+      std::cout << "Something went wrong calling the rpc new Block" << std::endl;
+      return false;
+    } else {
+      std::cout << "new Block:" << "response:" << conn->added() << std::endl;
+    }
+    return true;
+  };
 };
 
 int main(int argc, char** argv) {
@@ -69,5 +93,6 @@ int main(int argc, char** argv) {
       grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials())
     );
   cc.TransactionReader();
+  cc.SendBlock();
   return 0;
 }
