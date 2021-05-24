@@ -2,24 +2,28 @@ syntax = "proto3";
 
 package proto;
 
-// The greeting service definition.
+// The concensus service definition
 service Concencus {
     rpc newBlock(Block) returns ( ConStatus) {};
     rpc TransactionSubs(Empty) returns ( stream Transaction){};
 }
 
+// The status of the rpc call
 message ConStatus {
   bool added = 1;
 
 }
+
+// An empty message
 message Empty {}
-// The request message containing the user's name.
+
+// The transaction to broadcast to other mempools
 message Transaction {
   string from = 1;
   string to = 2;
   uint64 amount = 3;
 }
-
+// Mined blocks to broadcast
 message Block {
   string hash = 1;
   uint64 nonce = 2;
