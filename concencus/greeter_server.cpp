@@ -48,6 +48,15 @@ class ConcencusServiceImpl: public Concencus::Service  {
   };
 };
 
+
+
+class grpcServer {
+  public:
+    
+}
+
+
+
 void RunServer() {
   std::string server_address("0.0.0.0:50051");
   ConcencusServiceImpl service;

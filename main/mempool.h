@@ -10,7 +10,7 @@ class Transaction {
         float fee; // miner fee
         Transaction(std::string from,std::string to,long double Gam,std::string sig);
         std::string signTransaction();
-
+        friend bool operator<(const Transaction & t1, const Transaction & t2 );
 };
 class MemPool {
     private:
@@ -20,6 +20,7 @@ class MemPool {
         MemPool();
         void operator+(Transaction * t); // add transaction to pool
         void broadcastTransaction(Transaction * t);
+        void printTransactions();
         int listenTransactions();
         Transaction getTransaction();
          

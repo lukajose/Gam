@@ -1,10 +1,17 @@
 
+cc_library(
+    name = "concensus",
+    srcs = ["concencusServer.cpp"],
+    hdrs = ["concencusServer.h"],
+)
+
 cc_binary(
-    name = "greeter_server",
+    name = "serverGrpc",
     srcs = ["greeter_server.cpp"],
     defines = ["BAZEL_BUILD"],
     deps = [
-        "//proto:cppGamConcensusGrpclib", 
+        "//proto:cppGamConcensusGrpclib",
+        ":concencus" 
     ],
 )
 
