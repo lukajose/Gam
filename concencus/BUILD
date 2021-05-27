@@ -1,23 +1,23 @@
 
 cc_library(
     name = "concensus",
-    srcs = ["concencusServer.cpp"],
-    hdrs = ["concencusServer.h"],
+    srcs = ["grpcServer.cpp"],
+    hdrs = ["grpcServer.h"],
+    deps = ["//proto:cppGamConcensusGrpclib"],
 )
 
 cc_binary(
-    name = "serverGrpc",
-    srcs = ["greeter_server.cpp"],
+    name = "testServer",
+    srcs = ["testServer.cpp"],
     defines = ["BAZEL_BUILD"],
     deps = [
-        "//proto:cppGamConcensusGrpclib",
-        ":concencus" 
+        ":concensus" 
     ],
 )
 
 cc_binary(
-    name = "greeter_client",
-    srcs = ["greeter_client.cpp"],
+    name = "testClient",
+    srcs = ["testClient.cpp"],
     defines = ["BAZEL_BUILD"],
     deps = [
         "//proto:cppGamConcensusGrpclib",
