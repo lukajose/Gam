@@ -1,5 +1,3 @@
-// Logic and data behind the server's behavior.
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -9,9 +7,9 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <unistd.h>
 #ifdef BAZEL_BUILD
-#include "proto/GamConcensus.grpc.pb.h"
+#include "proto/GamConsensus.grpc.pb.h"
 #else
-#include "proto/GamConcensus.grpc.pb.h"
+#include "proto/GamConsensus.grpc.pb.h"
 #endif
 
 using grpc::Server;

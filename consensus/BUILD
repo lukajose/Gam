@@ -1,9 +1,9 @@
 
 cc_library(
-    name = "concensus",
+    name = "consensus",
     srcs = ["grpcServer.cpp"],
     hdrs = ["grpcServer.h"],
-    deps = ["//proto:cppGamConcensusGrpclib"],
+    deps = ["//proto:cppGamConsensusGrpclib"],
 )
 
 cc_binary(
@@ -11,7 +11,7 @@ cc_binary(
     srcs = ["testServer.cpp"],
     defines = ["BAZEL_BUILD"],
     deps = [
-        ":concensus" 
+        ":consensus" 
     ],
 )
 
@@ -20,6 +20,6 @@ cc_binary(
     srcs = ["testClient.cpp"],
     defines = ["BAZEL_BUILD"],
     deps = [
-        "//proto:cppGamConcensusGrpclib",
+        "//proto:cppGamConsensusGrpclib",
     ],
 )

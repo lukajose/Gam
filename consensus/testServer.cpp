@@ -1,8 +1,4 @@
 
-#include <iostream>
-#include <memory>
-#include <string>
-#include <thread>
 #include "grpcServer.h"
 
 int main(int argc, char** argv) {

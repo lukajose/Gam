@@ -3,35 +3,35 @@
 # load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_library")
 
 proto_library(
-    name = "GamConcensus",
-    srcs = ["GamConcensus.proto"],
+    name = "GamConsensus",
+    srcs = ["GamConsensus.proto"],
     visibility = ["//visibility:public"],
 )
 
 load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_compile","cpp_proto_library")
 cpp_proto_compile(
-    name = "cppGamConcensus",
-    protos = [":GamConcensus"],
+    name = "cppGamConsensus",
+    protos = [":GamConsensus"],
 
 )
 cpp_proto_library(
-    name = "cppGamConcensuslib",
-    protos = [":GamConcensus"],
+    name = "cppGamConsensuslib",
+    protos = [":GamConsensus"],
 
 )
 
 
 load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_compile","cpp_grpc_library")
 cpp_grpc_library(
-    name = "cppGamConcensusGrpclib",
-    protos = [":GamConcensus"],
+    name = "cppGamConsensusGrpclib",
+    protos = [":GamConsensus"],
     visibility = ["//visibility:public"],
-    deps = [":cppGamConcensuslib"],
+    deps = [":cppGamConsensuslib"],
 )
 
 cpp_grpc_compile(
-    name = "cppGamConcensusGrpc",
-    protos = [":GamConcensus"],
+    name = "cppGamConsensusGrpc",
+    protos = [":GamConsensus"],
     visibility = ["//visibility:public"],
 )
 
